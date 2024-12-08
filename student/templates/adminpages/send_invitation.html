@@ -1,0 +1,12 @@
+{% extends 'adminpages/adminbase.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Send Invitation for {{ course.title }}</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send Invitation</button>
+    </form>
+</div>
+{% endblock %}

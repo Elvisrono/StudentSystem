@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>SMS - Django</title>
+
+    <link rel="stylesheet" href="{% static 'style/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'style/adminbase.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+
+</head>
+
+<body>
+
+  <input type="checkbox" id="check">
+  <!--header area start-->
+  <header>
+    <label for="check">
+      <i class="fas fa-bars" id="sidebar_btn"></i>
+    </label>
+    <div class="left_area">
+      <h3>SMS - Admin Panel</h3>
+    </div>
+    <div class="right_area">
+      <a href="{% url 'logout' %}" class="logout_btn">Logout</a>
+    </div>
+  </header>
+  <!--header area end-->
+  <!--sidebar start-->
+ <div class="sidebar">
+  <center>
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+                {% if request.user.image %}
+                    <img src="{{ request.user.image.url }}" alt="Student Photo" class="card-img-top rounded-circle" style="width: 180px; height: 180px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="No image" class="card-img-top rounded-circle" style="width: 180px; height: 180px; object-fit: cover;">
+                {% endif %}
+            </div>
+
+    <h4>Admin {{ request.user.first_name }}</h4>
+  </center>
+
+  <a href="{% url 'admin_dashboard' %}"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+<a href="{% url 'student_list' %}"><i class="fas fa-user-graduate"></i><span>Students</span></a>
+<a href="{% url 'add_student' %}"><i class="fas fa-user-plus"></i><span>Add Student</span></a>
+<a href="{% url 'course_list' %}"><i class="fas fa-address-card"></i><span>Courses</span></a>
+<a href="{% url 'create_course' %}"><i class="fas fa-plus-circle"></i><span>Add Course</span></a>  <!-- New Link for Adding Courses -->
+<a href="{% url 'view_invitations' %}"><i class="fas fa-envelope"></i><span>View Invitations</span></a>
+
+
+</div>
+
+  <!--sidebar end-->
+
+
+  <!--content start-->
+  <div class="content">
+    <br><br><br><br><br>
+    {% block content %}
+
+    {% endblock content %}
+
+
+    <br><br><br>
+
+  </div>
+<script src="../../../static/style/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

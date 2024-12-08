@@ -1,0 +1,44 @@
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'style/login.css' %}">
+
+<!-- Display messages -->
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<form method="post" class="container">
+  {% csrf_token %}
+
+  <div class="login-box">
+    <div class="login-header">
+      <header>Login</header>
+    </div>
+    <div class="input-box">
+      <input type="text" name="username" class="input-field" placeholder="Username" autocomplete="off" required>
+    </div>
+    <div class="input-box">
+      <input type="password" name="password" class="input-field" placeholder="Password" autocomplete="off" required>
+    </div>
+    <div class="forgot">
+      <section>
+        <input type="checkbox" id="check" name="remember">
+        <label for="check">Remember me</label>
+      </section>
+      <section>
+        <a href="#">Forgot password</a>
+      </section>
+    </div>
+    <div class="input-submit">
+      <button type="submit" class="submit-btn">Sign In</button>
+    </div>
+    <div class="sign-up-link">
+      <p>Don't have an account? <a href="#">Sign Up</a></p>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

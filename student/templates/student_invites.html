@@ -1,0 +1,21 @@
+{% extends 'studentpages/student_dashboard.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'style/bootstrap/css/bootstrap.min.css'%}">
+<div class="container mt-5">
+    <h3>Pending Course Invitations</h3>
+    <ul class="list-group">
+        {% for invite in invitations %}
+            <li class="list-group-item d-flex justify-content-between">
+                <strong>{{ invite.course.title }}</strong> - {{ invite.course.description }}
+                <div>
+                    <a href="{% url 'accept_invitation' invite.id %}" class="btn btn-primary btn-sm">Accept</a>
+                    <a href="#" class="btn btn-danger btn-sm">Reject</a> <!-- Implement reject if needed -->
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No new invitations.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

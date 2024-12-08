@@ -1,0 +1,13 @@
+{% extends 'adminpages/adminbase.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Update Course: {{ course.title }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="{% url 'course_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

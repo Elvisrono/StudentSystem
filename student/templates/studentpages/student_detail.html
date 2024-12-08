@@ -1,0 +1,40 @@
+{% extends 'adminpages/adminbase.html' %}
+{% load static %}
+{% block content %}
+  <div class="container mt-5">
+
+    <!-- Heading -->
+    <h2 class="text-center mb-4">Student Details</h2>
+
+    <!-- Student Details Card -->
+    <div class="card shadow-lg border-0 rounded-3">
+      <div class="row g-0">
+        <!-- Profile Image on the Left -->
+        <div class="col-md-4 bg-light d-flex justify-content-center align-items-center p-4">
+          {% if student.image %}
+            <img src="{{ student.image.url }}" alt="{{ student.first_name }} {{ student.last_name }}" class="img-fluid rounded-3" style="max-width: 100%; height: auto;">
+          {% else %}
+            <img src="{% static 'images/placeholder.jpg' %}" alt="No image" class="img-fluid rounded-3" style="max-width: 100%; height: auto;">
+          {% endif %}
+        </div>
+
+        <!-- Student Details on the Right -->
+        <div class="col-md-8 p-4">
+          <h4 class="card-title text-primary mb-3">{{ student.first_name }} {{ student.last_name }}</h4>
+          <div class="mb-3">
+            <p class="card-text"><strong>Email:</strong> <span class="text-muted">{{ student.email }}</span></p>
+            <p class="card-text"><strong>Contact:</strong> <span class="text-muted">{{ student.contact_number }}</span></p>
+            <p class="card-text"><strong>Date of Birth:</strong> <span class="text-muted">{{ student.date_of_birth }}</span></p>
+            <p class="card-text"><strong>Course:</strong> <span class="text-muted">{{ student.course }}</span></p>
+          </div>
+
+          <!-- Back Button -->
+          <div class="d-flex justify-content-start">
+            <a href="{% url 'student_list' %}" class="btn btn-primary btn-lg shadow-sm">Back to Student List</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

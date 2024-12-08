@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>My Profile</title>
+    <link rel="stylesheet" href="{% static 'style/studentbase.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+
+</head>
+
+<body>
+
+  <input type="checkbox" id="check">
+  <!--header area start-->
+  <header>
+    <label for="check">
+      <i class="fas fa-bars" id="sidebar_btn"></i>
+    </label>
+    <div class="left_area">
+      <h3>Student System</h3>
+    </div>
+    <div class="right_area">
+      <a href="{% url 'logout' %}" class="logout_btn">Logout</a>
+    </div>
+  </header>
+  <!--header area end-->
+  <!--sidebar start-->
+  <div class="sidebar">
+    <center>
+
+     {% if request.user.image %}
+    <img src="{{ request.user.image.url }}" class="profile_image" alt="Profile Image">
+{% else %}
+    <img src="{% static 'images/placeholder.jpg' %}" class="profile_image" alt="Default Profile Image">
+{% endif %}
+<h4>{{request.user.first_name}} {{request.user.last_name}}</h4>
+
+    </center>
+
+    <a href="{% url 'student_dashboard' %}"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
+     <a href="{% url 'student_invites' %}">
+    <i class="fas fa-envelope"></i>
+    <span>Invites</span>
+    {% if invitations %}
+        <span class="badge badge-danger">{{ invitations|length }}</span>
+    {% endif %}
+</a>
+
+<a href="{% url 'student_courses' %}">
+    <i class="fas fa-book"></i>
+    <span>Courses</span>
+    {% if courses %}
+        <span class="badge badge-success">{{ courses|length }}</span>
+    {% endif %}
+</a>
+
+
+  </div>
+  <!--sidebar end-->
+
+
+  <!--content start-->
+  <div class="content">
+    <br><br><br><br><br>
+    {% block content %}
+
+    {% endblock content %}
+
+
+    <br><br><br>
+
+  </div>
+  <!--content end-->
+
+</body>
+
+</html>

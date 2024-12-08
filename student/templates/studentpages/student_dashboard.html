@@ -1,0 +1,21 @@
+{% extends 'studentpages/studentbase.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+
+  <link rel="stylesheet" href="{% static 'styles/student_dashboard.css' %}">
+
+<br>
+
+{%include 'studentpages/student_dashboard_card.html'%}
+
+<br><br>
+
+
+
+
+
+{% endblock content %}

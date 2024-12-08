@@ -1,0 +1,33 @@
+{% extends base_template %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style/bootstrap/css/bootstrap.min.css'%}">
+<div class="container mt-5">
+    <!-- Navigation link at the top -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="{% if request.user.is_superuser or request.user.role == 'admin' %}
+        {% url 'course_list' %}{% else %}{% url 'student_courses' %}{% endif %}"
+           class="btn btn-outline-primary btn-sm">
+    <i class="fas fa-arrow-left"></i> Back to Course List
+</a>
+
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-lg p-4">
+        <h3 class="text-center text-primary mb-4">{{ course.title }}</h3>
+        <img src="{% static 'images/log.jpg' %}" class="card-img-top rounded mb-4" alt="Course Image" style="height: 300px; object-fit: cover;">
+
+        <p class="lead">{{ course.description }}</p>
+
+        <!-- Additional Content: Topics and Resources -->
+        <h5 class="mt-4">Topics Covered:</h5>
+        <ul class="list-group mb-4">
+            <li class="list-group-item">Introduction to {{ course.title }}</li>
+        </ul>
+
+
+    </div>
+</div>
+{% endblock %}

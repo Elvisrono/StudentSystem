@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Custom CSS for inputs and textareas -->
+<style>
+    .custom-input {
+        background-color: #EBECFE; /* Custom background */
+        padding: 15px;             /* Add padding inside inputs */
+        border: none;              /* Remove borders */
+        outline: none;             /* Remove outline */
+        margin-bottom: 15px;       /* Space between fields */
+        margin-top: 5px;
+        resize: none;              /* Prevent textarea resizing */
+    }
+    .custom-input:focus {
+        background-color: #e2e5ff; /* Slightly lighter on focus */
+        box-shadow: 0 0 5px rgba(0, 0, 255, 0.1); /* Soft glow on focus */
+    }
+</style>
+
+<div class="container my-5">
+     <div class="text-center mb-5">
+        <small class="text-muted d-block">Contact Us</small> <!-- Subtitle -->
+        <h2 class="font-weight-bold">Get In Touch</h2> <!-- Main Title -->
+    </div>
+    <div class="row">
+        <!-- Contact Information Column -->
+        <div class="col-md-6 mb-4">
+            <h3 class="font-weight-bold text-dark">Send us a message</h3>
+            <p class="text-muted">
+                Feel free to reach out through the contact form or find our contact information below.
+                Your feedback, questions, and suggestions are important to us as we strive to provide
+                exceptional service to our university community.
+            </p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-envelope"></i> Contact@schoolweb</li>
+                <li class="mb-2"><i class="fas fa-phone"></i> +254 721 000000</li>
+                <li><i class="fas fa-map-marker-alt"></i> Web School, Nairobi<br>Kenya</li>
+            </ul>
+        </div>
+
+        <!-- Contact Form Column -->
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" class="form-control custom-input" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control custom-input" id="phone" name="phone" placeholder="Enter your mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Write your message here</label>
+                    <textarea class="form-control custom-input" id="message" name="message" rows="6" placeholder="Enter your message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block m-3">Submit Now</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

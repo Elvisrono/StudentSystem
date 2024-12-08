@@ -1,0 +1,31 @@
+{% extends 'adminpages/adminbase.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Student Invitations</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>Student</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invitation in invitations %}
+            <tr>
+                <td>{{ invitation.course.title }}</td>
+                <td>{{ invitation.student.first_name }} {{ invitation.student.last_name }}</td>
+                <td>
+                    {% if invitation.accepted %}
+                        <span class="badge bg-success">Accepted</span>
+                    {% else %}
+                        <span class="badge bg-warning">Not Accepted</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

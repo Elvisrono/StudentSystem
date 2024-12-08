@@ -1,0 +1,68 @@
+{% extends 'adminpages/adminbase.html' %}
+{% load static %}
+{% block content %}
+  <div class="container mt-5">
+
+    <!-- Heading -->
+    <h2 class="text-center mb-4 text-primary">Student List</h2>
+
+    <!-- Card for the Table -->
+    <div class="card shadow-lg rounded-3 border-0">
+      <div class="card-header bg-primary text-white text-center py-3 rounded-top">
+        <h4>Manage Students</h4>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover table-bordered table-striped">
+          <thead class="table-info">
+            <tr>
+              <th class="align-middle">Id</th>
+              <th class="align-middle">Image</th>
+              <th class="align-middle">Name</th>
+              <th class="align-middle">Email</th>
+              <th class="align-middle">Course</th>
+              <th class="align-middle">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students %}
+              <tr class="table-light">
+                <td class="align-middle">{{ student.id }}</td>
+                <td class="align-middle">
+                  {% if student.image %}
+                    <img src="{{ student.image.url }}" alt="{{ student.first_name }} {{ student.last_name }}" class="img-fluid rounded-3" style="max-width: 80px; height: auto;">
+                  {% else %}
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="No image" class="img-fluid rounded-3" style="max-width: 80px; height: auto;">
+                  {% endif %}
+                </td>
+                <td class="align-middle">{{ student.first_name }} {{ student.last_name }}</td>
+                <td class="align-middle">{{ student.email }}</td>
+                <td class="align-middle">{{ student.course }}</td>
+                <td class="align-middle">
+                  <!-- Action Buttons -->
+                  <div class="d-flex gap-2">
+                    <!-- Update Button -->
+                    <a href="{% url 'update_student' student.id %}" class="btn btn-warning btn-sm rounded-pill shadow-sm text-dark" title="Update Student">
+                      <i class="fas fa-edit"></i> Update
+                    </a>
+                    <!-- View Button -->
+                    <a href="{% url 'student_detail' student.id %}" class="btn btn-info btn-sm rounded-pill shadow-sm text-white" title="View Student">
+                      <i class="fas fa-eye"></i> View
+                    </a>
+                    <!-- Delete Button -->
+                    <form action="{% url 'delete_student' student.id %}" method="POST" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger btn-sm rounded-pill shadow-sm text-white" onclick="return confirm('Are you sure you want to delete this student?')" title="Delete Student">
+                        <i class="fas fa-trash"></i> Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style/bootstrap/css/bootstrap.min.css'%}">
+<div class="container mt-4">
+    <h2>My Profile</h2>
+
+
+    <div class="card mb-4">
+        <div class="row no-gutters">
+
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                {% if request.user.image %}
+                    <img src="{{ request.user.image.url }}" alt="Student Photo" class="card-img-top" style="width: 400px; height: 400px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/placeholder.jpg' %}" alt="No image" class="card-img-top rounded-circle" style="width: 180px; height: 180px; object-fit: cover;">
+                {% endif %}
+            </div>
+
+            <!-- Student Details (Right) -->
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ request.user.first_name }} {{ request.user.last_name }}</h5>
+                    <div class="detail-row mb-2">
+                        <h6 class="font-weight-bold">Name:</h6>
+                        <p>{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                    </div>
+                    <div class="detail-row mb-2">
+                        <h6 class="font-weight-bold">Email:</h6>
+                        <p>{{ request.user.email }}</p>
+                    </div>
+                    <div class="detail-row mb-2">
+                        <h6 class="font-weight-bold">Contact:</h6>
+                        <p>{{ request.user.contact_number }}</p>
+                    </div>
+                    <div class="detail-row mb-2">
+                        <h6 class="font-weight-bold">Course:</h6>
+                        <p>{{ request.user.course }}</p>
+                    </div>
+                    <div class="detail-row mb-2">
+                        <h6 class="font-weight-bold">Date of Birth:</h6>
+                        <p>{{ request.user.date_of_birth }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
