@@ -4,6 +4,10 @@
 
 <!-- Custom CSS for inputs and textareas -->
 <style>
+
+    body{
+        background-color: #f9fafe;
+    }
     .custom-input {
         background-color: #EBECFE; /* Custom background */
         padding: 15px;             /* Add padding inside inputs */
@@ -18,6 +22,8 @@
         box-shadow: 0 0 5px rgba(0, 0, 255, 0.1); /* Soft glow on focus */
     }
 </style>
+
+
 
 <div class="container my-5">
      <div class="text-center mb-5">
@@ -42,14 +48,15 @@
 
         <!-- Contact Form Column -->
         <div class="col-md-6">
-            <form>
+            <form method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" class="form-control custom-input" id="name" name="name" placeholder="Enter your name" required>
                 </div>
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" class="form-control custom-input" id="phone" name="phone" placeholder="Enter your mobile number" required>
+                    <label for="email">Email</label>
+                    <input type="tel" class="form-control custom-input" id="email" name="email" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Write your message here</label>
@@ -57,6 +64,13 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block m-3">Submit Now</button>
             </form>
+             {% if messages %}
+                <div class="alert alert-success">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

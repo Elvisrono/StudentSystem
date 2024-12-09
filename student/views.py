@@ -1,22 +1,54 @@
 import os
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.shortcuts import render, redirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .forms import StudentSignUpForm, LoginForm, StudentForm, InvitationForm
 from django.contrib.auth.decorators import login_required
 from .models import Student, Invitation, Course
 from .forms import CourseForm
+from django.core.mail import send_mail
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+
 
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def gallery(request):
+    return render(request, 'gallery.html')
+
 def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Send email
+        subject = f"New Message from {name}"
+        body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        recipient_email = 'elvisrono90@gmail.com'  # Replace with your recipient email address
+
+        try:
+            send_mail(
+                subject,
+                body,
+                'elvisrono90@gmail.com',  # Sender's email address
+                [recipient_email],
+                fail_silently=False,
+            )
+            messages.success(request, "Message sent successfully!")  # Success message
+        except Exception as e:
+            messages.error(request, f"Failed to send message: {str(e)}")  # Error message
+
+        return redirect('contact')  # Redirect to the same page to show message after submission
+
     return render(request, 'contact.html')
+
 def about(request):
     return render(request, 'about.html')
 
@@ -232,3 +264,5 @@ def accept_invitation(request, invitation_id):
         messages.error(request, 'Invalid invitation or already accepted.')
 
     return redirect('student_invites')
+
+

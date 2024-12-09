@@ -6,6 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('contact/', views.contact, name='contact'),
+    path('gallery/', views.gallery, name='gallery'),
     path('about/', views.about, name='about'),
     path('signup/', views.student_signup, name='signup'),
     path('login/', views.user_login, name='login'),
@@ -29,4 +30,5 @@ urlpatterns = [
     path('student/<int:pk>/delete/', views.delete_student, name='delete_student'),
     path('invites/', views.student_invites, name='student_invites'),
     path('accept_invite/<int:invitation_id>/', views.accept_invitation, name='accept_invitation'),
+
 ]
