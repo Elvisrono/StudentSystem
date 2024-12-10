@@ -4,29 +4,75 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'style/bootstrap/css/bootstrap.min.css'%}">
+
 <div class="container mt-5">
     <!-- Navigation link at the top -->
     <div class="d-flex justify-content-start mb-3">
         <a href="{% if request.user.is_superuser or request.user.role == 'admin' %}
         {% url 'course_list' %}{% else %}{% url 'student_courses' %}{% endif %}"
            class="btn btn-outline-primary btn-sm">
-    <i class="fas fa-arrow-left"></i> Back to Course List
-</a>
-
+            <i class="fas fa-arrow-left"></i> Back to Course List
+        </a>
     </div>
 
-    <div class="card shadow-lg border-0 rounded-lg p-4">
-        <h3 class="text-center text-primary mb-4">{{ course.title }}</h3>
-        <img src="{% static 'images/log.jpg' %}" class="card-img-top rounded mb-4" alt="Course Image" style="height: 300px; object-fit: cover;">
-
-        <p class="lead">{{ course.description }}</p>
-
-        <!-- Additional Content: Topics and Resources -->
-        <h5 class="mt-4">Topics Covered:</h5>
-        <ul class="list-group mb-4">
-            <li class="list-group-item">Introduction to {{ course.title }}</li>
-        </ul>
-
+    <div class="card shadow-lg border-0 rounded-lg">
+        <!-- Course Header -->
+        <div class="card-header bg-primary text-white text-center py-4">
+            <h3 class="mb-0"><i class="fas fa-code"></i> {{ course.title }}</h3>
+        </div>
+        <!-- Course Image -->
+        <img src="{% static 'images/log.jpg' %}" class="card-img-top rounded" alt="Course Image"
+             style="height: 300px; object-fit: cover;">
+        <!-- Course Content -->
+        <div class="card-body">
+            <p class="lead text-muted">{{ course.description }}</p>
+            <!-- Topics -->
+            <h4 class="mt-4"><i class="fas fa-book"></i> Topics Covered</h4>
+            <ul class="list-group mb-4">
+                <!-- Chapter 1 -->
+                <li class="list-group-item">
+                    <h5><i class="fas fa-cogs text-primary"></i> Chapter 1: Fundamentals of {{ course.title }}</h5>
+                    <ul class="mt-2">
+                        <li><i class="fas fa-angle-right"></i> Understanding web technologies and protocols</li>
+                        <li><i class="fas fa-angle-right"></i> Basics of HTML and semantic tags</li>
+                        <li><i class="fas fa-angle-right"></i> Styling web pages with CSS</li>
+                        <li><i class="fas fa-angle-right"></i> Creating responsive designs with media queries</li>
+                        <li><i class="fas fa-angle-right"></i> Introduction to web accessibility</li>
+                    </ul>
+                </li>
+                <!-- Chapter 2 -->
+                <li class="list-group-item">
+                    <h5><i class="fas fa-code text-success"></i> Chapter 2: Advanced Concepts</h5>
+                    <ul class="mt-2">
+                        <li><i class="fas fa-angle-right"></i> JavaScript fundamentals: variables, functions, and loops</li>
+                        <li><i class="fas fa-angle-right"></i> Building interactive features with JavaScript</li>
+                        <li><i class="fas fa-angle-right"></i> Working with the Document Object Model (DOM)</li>
+                        <li><i class="fas fa-angle-right"></i> Handling events and user interactions</li>
+                        <li><i class="fas fa-angle-right"></i> Introduction to AJAX and fetching data dynamically</li>
+                    </ul>
+                </li>
+                <!-- Chapter 3 -->
+                <li class="list-group-item">
+                    <h5><i class="fas fa-tools text-danger"></i> Chapter 3: Frameworks and Tools</h5>
+                    <ul class="mt-2">
+                        <li><i class="fas fa-angle-right"></i> Using Bootstrap for responsive designs</li>
+                        <li><i class="fas fa-angle-right"></i> Tailwind CSS for utility-first styling</li>
+                        <li><i class="fas fa-angle-right"></i> Version control with Git and collaboration using GitHub</li>
+                        <li><i class="fas fa-angle-right"></i> Building modular components with React</li>
+                        <li><i class="fas fa-angle-right"></i> Deploying projects on live servers</li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Additional Resources -->
+            <h4><i class="fas fa-folder-open"></i> Additional Resources</h4>
+            <p class="mb-0">Students will get access to:</p>
+            <ul>
+                <li><i class="fas fa-check text-success"></i> Comprehensive notes and cheat sheets</li>
+                <li><i class="fas fa-check text-success"></i> Project templates for hands-on learning</li>
+                <li><i class="fas fa-check text-success"></i> Recorded video tutorials and walkthroughs</li>
+                <li><i class="fas fa-check text-success"></i> Weekly live Q&A sessions with instructors</li>
+            </ul>
+        </div>
 
     </div>
 </div>

@@ -18,10 +18,10 @@ class StudentSignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'contact_number', 'course', 'date_of_birth', 'password1', 'password2', 'image')
 
     def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_student = True
+        user = super().save(commit=False)  # Call the parent save method
+        user.is_student = True  # Ensure the student role is set
         if commit:
-            user.save()
+            user.save()  # Save the user object
         return user
 
 class LoginForm(AuthenticationForm):
@@ -29,7 +29,7 @@ class LoginForm(AuthenticationForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['username', 'first_name', 'last_name', 'email', 'image', 'contact_number', 'course', 'password']
+        fields = ['username', 'first_name', 'last_name', 'email', 'image', 'contact_number', 'course']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter username'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter first name'}),
@@ -38,7 +38,6 @@ class StudentForm(forms.ModelForm):
             'date_of_birth': forms.DateInput(
                 attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}),
             'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter contact number'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Enter password'}),
             'image': forms.ClearableFileInput(
                 attrs={'class': 'form-control-file', 'accept': 'image/*', 'title': 'Upload your image here'}),
         }
@@ -55,5 +54,16 @@ class CourseForm(forms.ModelForm):
 User = get_user_model()
 
 class InvitationForm(forms.Form):
-    # Select students to send an invitation to
-    student = forms.ModelChoiceField(queryset=User.objects.filter(role='student'), required=True)
+    # ModelMultipleChoiceField allows selecting multiple students
+    student = forms.ModelMultipleChoiceField(
+        queryset=User.objects.filter(role='student'),  # Only fetch students
+        widget=forms.CheckboxSelectMultiple,  # Display checkboxes
+        required=True,
+        label="Select Students to Invite"
+    )
+
+
+class AdminProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'image']

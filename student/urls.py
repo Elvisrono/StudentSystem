@@ -30,5 +30,6 @@ urlpatterns = [
     path('student/<int:pk>/delete/', views.delete_student, name='delete_student'),
     path('invites/', views.student_invites, name='student_invites'),
     path('accept_invite/<int:invitation_id>/', views.accept_invitation, name='accept_invitation'),
+path('update_profile/', views.update_admin_profile, name='update_admin_profile'),
 
 ]

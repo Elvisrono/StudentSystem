@@ -3,10 +3,37 @@
 {% block content %}
 <div class="container mt-4">
     <h3>Send Invitation for {{ course.title }}</h3>
+
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Send Invitation</button>
+
+        <!-- Select All Checkbox -->
+        <div class="form-check mb-3">
+            <input type="checkbox" id="select-all" class="form-check-input">
+            <label class="form-check-label" for="select-all">Select All Students</label>
+        </div>
+
+        <!-- Render individual student checkboxes -->
+        <div class="form-group">
+            <label for="students" class="form-label">Select Students</label>
+            <div>
+                {{ form.student }}  <!-- This will render checkboxes for all students -->
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-3">Send Invitation</button>
     </form>
 </div>
+
+<script>
+    // JavaScript to handle "Select All" functionality
+    document.getElementById('select-all').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[name="student"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked; // Select all or deselect all based on the "Select All" checkbox
+        });
+    });
+</script>
+
 {% endblock %}

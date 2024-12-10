@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .forms import StudentSignUpForm, LoginForm, StudentForm, InvitationForm
+from .forms import StudentSignUpForm, LoginForm, StudentForm, InvitationForm, AdminProfileForm
 from django.contrib.auth.decorators import login_required
 from .models import Student, Invitation, Course
 from .forms import CourseForm
@@ -104,6 +104,17 @@ def admin_dashboard(request):
     return render(request, 'adminpages/admin_dashboard.html', {'studentcount': student_count, 'admin': admin_details})
 
 @login_required
+def update_admin_profile(request):
+    if request.method == 'POST':
+        form = AdminProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_dashboard')
+    else:
+        form = AdminProfileForm(instance=request.user)
+    return render(request, 'adminpages/update_profile.html', {'form': form})
+
+@login_required
 def student_list(request):
     if not request.user.is_superuser and request.user.role != 'admin':
         return redirect('index')
@@ -119,16 +130,14 @@ def student_detail(request, pk):
 @login_required
 def add_student(request):
     if request.method == 'POST':
-        form = StudentForm(request.POST, request.FILES)
+        form = StudentSignUpForm(request.POST, request.FILES)
         if form.is_valid():
-            student = form.save(commit=False)
-            student.set_password(form.cleaned_data['password'])  # Hash the password
-            student.role = 'student'  # Explicit role assignment
-            student.save()
+            form.save()  # Save the user with the password
             messages.success(request, 'Student added successfully!')
             return redirect('student_list')
     else:
-        form = StudentForm()
+        form = StudentSignUpForm()
+
     return render(request, 'adminpages/add_student.html', {'form': form})
 
 @login_required
@@ -136,17 +145,31 @@ def update_student(request, pk):
     student = get_object_or_404(Student, pk=pk)
     if request.method == 'POST':
         form = StudentForm(request.POST, request.FILES, instance=student)
+
         if form.is_valid():
-            form.save()
+            # Save the form without changing the password
+            student = form.save(commit=False)
+
             if 'image' in request.FILES:
                 file_name = os.path.basename(request.FILES['image'])
-                messages.success(request, f'Student updated succesfully {file_name}) uploaded. ')
+                messages.success(request, f'Student updated successfully. {file_name} uploaded.')
             else:
-                messages.success(request, 'student updated successfully')
+                messages.success(request, 'Student updated successfully.')
+
+            # If the admin wants to change the password, handle it here
+            new_password = request.POST.get('password')
+            if new_password:
+                student.set_password(new_password)
+                student.save()  # Save the user again after updating the password
+            else:
+                student.save()  # Only save other updates
             return redirect('student_list')
     else:
         form = StudentForm(instance=student)
+
     return render(request, 'adminpages/update_student.html', {'form': form})
+
+
 @login_required
 def delete_student(request, pk):
     student = get_object_or_404(Student, pk=pk)
