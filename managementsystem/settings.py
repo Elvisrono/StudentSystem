@@ -26,11 +26,7 @@ SECRET_KEY = 'django-insecure-kc5f1&kli-fj@zcy%ds$2n(5=0!ra=q%x06bifq=m44q-eqncf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',  # For local development
-    '.vercel.app',  # For Vercel deployment (adjust based on your domain)
-      # Replace with your custom domain if applicable
-]
+ALLOWED_HOSTS =['*']
 
 
 # Application definition
@@ -138,10 +134,12 @@ USE_TZ = True
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
 
 # Directory to hold collected static files (for production)
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Additional directories to look for static files
 STATICFILES_DIRS = [
