@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',  # For local development
-    'localhost',  # Optional
     '.vercel.app',  # For Vercel deployment (adjust based on your domain)
       # Replace with your custom domain if applicable
 ]
@@ -88,7 +87,7 @@ DATABASES = {
         'NAME': 'student_database',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
