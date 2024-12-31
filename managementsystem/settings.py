@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import dj_database_url
+
 import os
 from pathlib import Path
 from django.conf.global_settings import AUTH_USER_MODEL
@@ -26,7 +28,7 @@ SECRET_KEY = 'django-insecure-kc5f1&kli-fj@zcy%ds$2n(5=0!ra=q%x06bifq=m44q-eqncf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =['*']
+ALLOWED_HOSTS =['.vercel.app']
 
 
 # Application definition
@@ -76,15 +78,12 @@ WSGI_APPLICATION = 'managementsystem.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# Replace the SQLite DATABASES configuration with PostgreSQL:
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'student_database',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -134,9 +133,18 @@ USE_TZ = True
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR / 'media'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
+
+
+# This production code might break development mode, so we check whether we're in DEBUG mode
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Directory to hold collected static files (for production)
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
