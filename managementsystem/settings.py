@@ -9,15 +9,12 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import dj_database_url
 
 import os
 from pathlib import Path
-from django.conf.global_settings import AUTH_USER_MODEL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,13 +25,10 @@ SECRET_KEY = 'django-insecure-kc5f1&kli-fj@zcy%ds$2n(5=0!ra=q%x06bifq=m44q-eqncf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =['.vercel.app']
-
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 # Application definition
-
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,22 +68,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'managementsystem.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-# Replace the SQLite DATABASES configuration with PostgreSQL:
-
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join('/tmp', 'db.sqlite3'),
+        'NAME': os.path.join('/tmp', 'db.sqlite3'),  # Vercel's ephemeral filesystem
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,8 +97,6 @@ AUTH_USER_MODEL = 'student.Student'
 LOGIN_REDIRECT_URL = '/student/dashboard/'
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -120,52 +105,30 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-# STATIC_URL = 'static/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',
-# ]
-#
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
-
-
-# This production code might break development mode, so we check whether we're in DEBUG mode
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Directory to hold collected static files (for production)
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Additional directories to look for static files
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files settings
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'elvisrono90@gmail.com'
-EMAIL_HOST_PASSWORD = 'nyed kuhz rihk hial'
+EMAIL_HOST_PASSWORD = 'nyed kuhz rihk hial'  # Use environment variable for security
+
+# Production settings
+if not DEBUG:
+    ALLOWED_HOSTS = ['.vercel.app']
