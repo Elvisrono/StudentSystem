@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kc5f1&kli-fj@zcy%ds$2n(5=0!ra=q%x06bifq=m44q-eqncf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
+ALLOWED_HOSTS = ['.vercel.app','localhost','127.0.0.1','.now.sh']
 
 # Application definition
 INSTALLED_APPS = [
@@ -71,8 +71,12 @@ WSGI_APPLICATION = 'managementsystem.wsgi.application'
 # Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'ADndGefGyEUEvScrsHVFaBpYQLmFaEIV',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '25322',
     }
 }
 
@@ -108,18 +112,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # Ensure this section is set up correctly
+
+
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+
+STATICFILES_DIRS =[os.path.join(BASE_DIR,'static')]
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# For production, collect static files into a specific directory
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Add media file settings
 
 
 
@@ -134,6 +134,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'elvisrono90@gmail.com'
 EMAIL_HOST_PASSWORD = 'nyed kuhz rihk hial'  # Use environment variable for security
 
-# Production settings
-if not DEBUG:
-    ALLOWED_HOSTS = ['.vercel.app']
+
