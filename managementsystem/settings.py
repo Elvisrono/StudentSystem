@@ -106,17 +106,23 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Ensure this section is set up correctly
 
-# Additional directories to look for static files
+STATIC_URL = '/static/'
+
+# Set up static files directory for development
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files
+# For production, collect static files into a specific directory
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Add media file settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
