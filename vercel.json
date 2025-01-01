@@ -1,9 +1,17 @@
 {
-    "builds": [{
-        "src": "managementsystem/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+    "builds": [
+        {
+            "src": "managementsystem/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        }
+    ],
+    "hooks": {
+        "build": "python manage.py collectstatic --noinput"
+    },
     "routes": [
         {
             "src": "/(.*)",
